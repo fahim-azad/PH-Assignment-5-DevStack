@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 interface Technology {
   id: string;
@@ -56,11 +57,13 @@ const Technologies = () => {
   const addToStack = (tech: Technology) => {
     if (!stack.some((t) => t.id === tech.id)) {
       setStack([...stack, tech]);
+      toast.success(`${tech.name} added to your stack!`);
     }
   };
 
   const removeFromStack = (id: string) => {
     setStack(stack.filter((t) => t.id !== id));
+    toast.error("Technology removed from stack");
   };
 
   return (
@@ -212,7 +215,10 @@ const Technologies = () => {
                 </div>
 
                 <button
-                  onClick={() => setStack([])}
+                  onClick={() => {
+                    setStack([]);
+                    toast.error("Stack cleared");
+                  }}
                   className="w-full py-2.5 rounded-xl font-bold text-[#DC2626] border border-[#FECACA] hover:bg-red-50 transition-colors"
                 >
                   Remove All
